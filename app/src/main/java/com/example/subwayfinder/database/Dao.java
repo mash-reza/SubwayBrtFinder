@@ -8,4 +8,7 @@ import java.util.List;
 public interface Dao {
     @Query("select * from station")
     List<Station> getStations();
+
+    @Query("select * from station where id = :id")
+    List<Station> getStation(int id);
 }

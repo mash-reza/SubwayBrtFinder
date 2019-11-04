@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.subwayfinder.Util.Utilies;
-
 @Entity(tableName = "station")
-public class Station implements Comparable<Station> {
+public class Station {
     @PrimaryKey
     private int id;
     @NonNull
@@ -62,11 +60,9 @@ public class Station implements Comparable<Station> {
         this.lon = lon;
     }
 
+    @NonNull
     @Override
-    public int compareTo(Station station) {
-        Utilies.distance(this.getLat(),station.getLat(),this.getLon(),station.getLon(),0,0);
-
-
-        return 0;
+    public String toString() {
+        return "\nid: " + this.id + ", name: " + this.name + ", line: " + this.line + ", lat: " + this.lat + ", lon:" + this.lon + "\n";
     }
 }
