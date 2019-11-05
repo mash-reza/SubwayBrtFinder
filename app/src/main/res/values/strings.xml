@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SubwayFinder</string>
+    <string name="app_name">Subway and BRT Assistant of Tehran</string>
+    <string name="back_pressed_message">press back again to exit</string>
 </resources>

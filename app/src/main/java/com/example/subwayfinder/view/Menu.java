@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.subwayfinder.R;
@@ -17,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Menu extends AppCompatActivity {
+    private static final String TAG = "Menu";
 
     @BindView(R.id.menuBrtImageButton)
     ImageButton menuBrtImageButton;
@@ -30,6 +34,8 @@ public class Menu extends AppCompatActivity {
     ZoomageView menuMapZoomageView;
 
     private boolean isMapImageShowing = false;
+    private boolean isBackDoublePressed = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +50,16 @@ public class Menu extends AppCompatActivity {
 
                 break;
             case R.id.menuBrtMapImageButton:
-//                Glide.with(this).load(Drawable.createFromStream(getAssets().open("brt_map.jpg"),"")).into(menuMapZoomageView);
-                menuMapZoomageView.setImageDrawable(Drawable.createFromStream(getAssets().open("brt_map.jpg"),""));
+//                Glide.with(this).load(brtMapDrawable).into(menuMapZoomageView);
+                menuMapZoomageView.setImageResource(R.drawable.brt_map);
                 viewStateChanger();
                 break;
             case R.id.menuMetroImageButton:
 
                 break;
             case R.id.menuMetroMapImageButton:
-//                Glide.with(this).load(Drawable.createFromStream(getAssets().open("subway_map.jpg"),"")).into(menuMapZoomageView);
-                menuMapZoomageView.setImageDrawable(Drawable.createFromStream(getAssets().open("subway_map.jpg"),""));
-
+//                Glide.with(this).load(metroMapDrawable).into(menuMapZoomageView);
+                menuMapZoomageView.setImageResource(R.drawable.subway_map);
                 viewStateChanger();
                 break;
         }
@@ -62,11 +67,7 @@ public class Menu extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        viewStateChanger();
-    }
-
-    private void viewStateChanger(){
-        if(isMapImageShowing){
+        if (isMapImageShowing) {
             //gone map and show buttons
             menuMapZoomageView.setVisibility(View.GONE);
             menuBrtImageButton.setVisibility(View.VISIBLE);
@@ -74,8 +75,27 @@ public class Menu extends AppCompatActivity {
             menuMetroImageButton.setVisibility(View.VISIBLE);
             menuMetroMapImageButton.setVisibility(View.VISIBLE);
             isMapImageShowing = false;
+        } else {
+            if (isBackDoublePressed) {
+                finish();
+            } else {
+                isBackDoublePressed = true;
+                Toast.makeText(this, R.string.back_pressed_message, Toast.LENGTH_SHORT).show();
+                new Handler().postDelayed(() -> isBackDoublePressed = false, 1500);
+            }
         }
-        else {
+    }
+
+    private void viewStateChanger() {
+        if (isMapImageShowing) {
+            //gone map and show buttons
+            menuMapZoomageView.setVisibility(View.GONE);
+            menuBrtImageButton.setVisibility(View.VISIBLE);
+            menuBrtMapImageButton.setVisibility(View.VISIBLE);
+            menuMetroImageButton.setVisibility(View.VISIBLE);
+            menuMetroMapImageButton.setVisibility(View.VISIBLE);
+            isMapImageShowing = false;
+        } else {
             //gone buttons and show map
             menuBrtImageButton.setVisibility(View.GONE);
             menuBrtMapImageButton.setVisibility(View.GONE);
@@ -84,5 +104,6 @@ public class Menu extends AppCompatActivity {
             menuMapZoomageView.setVisibility(View.VISIBLE);
             isMapImageShowing = true;
         }
+
     }
 }

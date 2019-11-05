@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">راهنمای مترو و BRT تهران</string>
+    <string name="back_pressed_message">برای خروج مجددا بازگشت را بفشارید</string>
+</resources>
