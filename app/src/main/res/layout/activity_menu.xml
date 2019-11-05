@@ -5,4 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.Menu">
+
+    <ImageButton
+        android:id="@+id/menuBrtMapImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:selectableItemBackground"
+        android:onClick="onClick"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/menuBrtImageButton"
+        app:layout_constraintEnd_toStartOf="@+id/menuMetroMapImageButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/brt_map_icon" />
+
+    <ImageButton
+        android:id="@+id/menuMetroMapImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:selectableItemBackground"
+        android:onClick="onClick"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/menuMetroImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/menuBrtMapImageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/metro_map_icon" />
+
+    <ImageButton
+        android:id="@+id/menuBrtImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:selectableItemBackground"
+        android:onClick="onClick"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/menuMetroImageButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/menuBrtMapImageButton"
+        app:srcCompat="@drawable/brt_icon" />
+
+    <ImageButton
+        android:id="@+id/menuMetroImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:selectableItemBackground"
+        android:onClick="onClick"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/menuBrtImageButton"
+        app:layout_constraintTop_toBottomOf="@+id/menuMetroMapImageButton"
+        app:srcCompat="@drawable/metro_icon" />
+
+    <com.jsibbold.zoomage.ZoomageView
+        android:id="@+id/menuMapZoomageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:zoomage_animateOnReset="true"
+        app:zoomage_autoCenter="true"
+        app:zoomage_autoResetMode="UNDER"
+        app:zoomage_maxScale="8"
+        app:zoomage_minScale="0.6"
+        app:zoomage_restrictBounds="false"
+        app:zoomage_translatable="true"
+        app:zoomage_zoomable="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>
