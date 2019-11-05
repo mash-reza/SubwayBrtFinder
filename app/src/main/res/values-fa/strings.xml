@@ -2,4 +2,24 @@
 <resources>
     <string name="app_name">راهنمای مترو و BRT تهران</string>
     <string name="back_pressed_message">برای خروج مجددا بازگشت را بفشارید</string>
+    <string-array name="metro_lines">
+        <item>خط ۱ (تجریش - کهریزک)</item>
+        <item>خط ۲ (صادقیه - فرهنگسرا)</item>
+        <item>خط ۳ (آزادگان - قائم)</item>
+        <item>خط ۴ (ارم سبز - شهید کلاهدوز)</item>
+        <item>خط ۵ (گلشهر - صادقیه)</item>
+        <item>خط ۶ (دولت آباد - میدان شهدا)</item>
+        <item>خط ۷ (مهدیه - میدان صنعت)</item>
+    </string-array>
+    <string-array name="brt_lines">
+        <item>خط ۱ (پایانه آزادی - تهرانپارس)</item>
+        <item>خط ۲ (پایانه آزادی - پایانه خاوران)</item>
+        <item>خط ۳ (پایانه خاوران - پایانه علم و صنعت)</item>
+        <item>خط ۴ (پایانه خاوران - پایانه افشار)</item>
+        <item>خط ۵ (پایانه بیهقی - پایانه علم و صنعت)</item>
+        <item>خط ۷ (پایانه معین(راه آهن) - پایانه تجریش)</item>
+        <item>خط ۸ (پایانه خاوران - پایانه خاوران)</item>
+        <item>خط ۹ (پایانه جوانمرد - پایانه لاله)</item>
+        <item>خط ۱۰ (پایانه آزادی - دانشگاه آزاد)</item>
+    </string-array>
 </resources>

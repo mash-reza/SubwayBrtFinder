@@ -1,17 +1,27 @@
 package com.example.subwayfinder.view;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.subwayfinder.R;
+import com.example.subwayfinder.Util.Utilies;
+import com.example.subwayfinder.database.Database;
+import com.example.subwayfinder.database.Station;
 import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.IOException;
@@ -36,29 +46,37 @@ public class Menu extends AppCompatActivity {
     private boolean isMapImageShowing = false;
     private boolean isBackDoublePressed = false;
 
+    enum StationType {
+        METRO, BUS
+    }
+
+    private int line = -1;
+    private boolean beginOfDialogShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
+//        AsyncTask.execute(() -> {
+//            Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383, 1);
+//            Log.i(TAG, station.toString());
+//        });
     }
 
     public void onClick(View view) throws IOException {
         switch (view.getId()) {
             case R.id.menuBrtImageButton:
-
+                showStationDialog(StationType.BUS);
                 break;
             case R.id.menuBrtMapImageButton:
-//                Glide.with(this).load(brtMapDrawable).into(menuMapZoomageView);
                 menuMapZoomageView.setImageResource(R.drawable.brt_map);
                 viewStateChanger();
                 break;
             case R.id.menuMetroImageButton:
-
+                showStationDialog(StationType.METRO);
                 break;
             case R.id.menuMetroMapImageButton:
-//                Glide.with(this).load(metroMapDrawable).into(menuMapZoomageView);
                 menuMapZoomageView.setImageResource(R.drawable.subway_map);
                 viewStateChanger();
                 break;
@@ -104,6 +122,61 @@ public class Menu extends AppCompatActivity {
             menuMapZoomageView.setVisibility(View.VISIBLE);
             isMapImageShowing = true;
         }
+    }
 
+    private void showStationDialog(StationType type) {
+        line = -1;
+        beginOfDialogShowing = true;
+        AlertDialog dialog = new AlertDialog.Builder(this).setCancelable(false).create();
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_station, null);
+        dialog.setView(dialogView);
+        Spinner spinner = dialogView.findViewById(R.id.dialogStationSpinner);
+        Button cancel = dialogView.findViewById(R.id.dialogStationCancelButton);
+        Button find = dialogView.findViewById(R.id.dialogStationFindButton);
+        TextView stationName = dialogView.findViewById(R.id.dialogStationNameTextView);
+        switch (type) {
+            case BUS:
+                ArrayAdapter<CharSequence> brtAdapter = ArrayAdapter.createFromResource(this, R.array.brt_lines, android.R.layout.simple_spinner_item);
+                brtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(brtAdapter);
+                break;
+            case METRO:
+                ArrayAdapter<CharSequence> metroAdapter = ArrayAdapter.createFromResource(this, R.array.metro_lines, android.R.layout.simple_spinner_item);
+                metroAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(metroAdapter);
+                break;
+        }
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (beginOfDialogShowing) {
+                    beginOfDialogShowing = false;
+                } else {
+                    if (type == StationType.BUS) {
+                        if (parent.getSelectedItemPosition() < 5)
+                            line = parent.getSelectedItemPosition() + 1;
+                        else line = parent.getSelectedItemPosition() + 2;
+                    } else line = parent.getSelectedItemPosition() + 1;
+                    Log.i(TAG, "onItemSelected: " + line);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+        cancel.setOnClickListener(v -> dialog.cancel());
+        find.setOnClickListener(v -> AsyncTask.execute(() -> {
+            if (line == -1) {
+                Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383);
+                stationName.setText(station.getName());
+                Log.i(TAG, station.toString());
+            } else {
+                Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383, line);
+                stationName.setText(station.getName());
+                Log.i(TAG, station.toString());
+            }
+        }));
+        dialog.show();
     }
 }

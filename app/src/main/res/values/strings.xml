@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Subway and BRT Assistant of Tehran</string>
     <string name="back_pressed_message">press back again to exit</string>
+    <string-array name="metro_lines">
+        <item>Line 1 (Tajrish - Kahrizak)</item>
+        <item>Line 2 (Sadeghieh - Farhangsara)</item>
+        <item>Line 3 (Azadegan - Ghaem)</item>
+        <item>Line 4 (Eram-Sabz - ShahidKolahdouz)</item>
+        <item>Line 5 (Golshahr - Sadeghieh)</item>
+        <item>Line 6 (Dolat-Abad - MeidanShohada)</item>
+        <item>Line 7 (Mahdieh - MeidanSanaat)</item>
+    </string-array>
+    <string-array name="brt_lines">
+        <item>Line 1 (Azadi - TehranPars)</item>
+        <item>Line 2 (Azadi - Khavaran)</item>
+        <item>Line 3 (Khavaran - ElmoSanaat)</item>
+        <item>Line 4 (TeminalJonoub - PayanehAfshar)</item>
+        <item>Line 5 (Beihaghi - ElmoSanaat)</item>
+        <item>Line 7 (RahAhan - Tajrish)</item>
+        <item>Line 8 (TeminalJonoub - Khavaran)</item>
+        <item>Line 9 (JavanMard - Laleh)</item>
+        <item>Line 10 (Azadi - DaneshgahAzad)</item>
+    </string-array>
 </resources>

@@ -15,7 +15,6 @@ import java.util.List;
 public class Utilies {
 
     private static Utilies instance;
-    private List<Geo> geoList = new ArrayList<>();
     private static List<Station> stationList = new ArrayList<>();
 
     /**
@@ -37,18 +36,48 @@ public class Utilies {
      * @param lon
      * @return the id of the station witch is nearest to the location provided in method signature
      */
-    public int getNearestStation(double lat, double lon) {
+    public Station getNearestStation(double lat, double lon) {
+        Station returningStation = null;
+        double distance = 0;
         for (Station station : stationList) {
-            geoList.add(new Geo(station.getId(), distance(
-                    lat, station.getLat(), lon, station.getLon(), 0, 0
-            )));
+            if (returningStation == null) {
+                returningStation = station;
+                distance = distance(lat, station.getLat(), lon, station.getLon(), 0, 0);
+                continue;
+            }
+            if (distance > distance(lat, station.getLat(), lon, station.getLon(), 0, 0)) {
+                returningStation = station;
+            }
         }
-        Collections.sort(geoList, (o1, o2) -> Double.compare(o1.getDistance(), o2.getDistance()));
-        return geoList.get(0).getId();
+        return returningStation;
+    }
+
+    /**
+     * @param lat
+     * @param lon
+     * @param line
+     * @return the id of the station witch is nearest to the location provided in method signature
+     */
+    public Station getNearestStation(double lat, double lon, int line) {
+        Station returningStation = null;
+        double distance = 0;
+        for (Station station : stationList) {
+            if (station.getLine() == line) {
+                if (returningStation == null) {
+                    returningStation = station;
+                    distance = distance(lat, station.getLat(), lon, station.getLon(), 0, 0);
+                    continue;
+                }
+                if (distance > distance(lat, station.getLat(), lon, station.getLon(), 0, 0)) {
+                    returningStation = station;
+                }
+            }
+        }
+        return returningStation;
     }
 
     private double distance(double lat1, double lat2, double lon1,
-                                  double lon2, double el1, double el2) {
+                            double lon2, double el1, double el2) {
 
         final int R = 6371; // Radius of the earth
 
