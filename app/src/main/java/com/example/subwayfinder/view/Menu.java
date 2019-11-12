@@ -2,7 +2,6 @@ package com.example.subwayfinder.view;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,8 +19,8 @@ import android.widget.Toast;
 
 import com.example.subwayfinder.R;
 import com.example.subwayfinder.Util.Utilies;
-import com.example.subwayfinder.database.Database;
-import com.example.subwayfinder.database.Station;
+import com.example.subwayfinder.database.Brt;
+import com.example.subwayfinder.database.Metro;
 import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.IOException;
@@ -58,10 +57,7 @@ public class Menu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
-//        AsyncTask.execute(() -> {
-//            Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383, 1);
-//            Log.i(TAG, station.toString());
-//        });
+
     }
 
     public void onClick(View view) throws IOException {
@@ -155,7 +151,10 @@ public class Menu extends AppCompatActivity {
                     if (type == StationType.BUS) {
                         if (parent.getSelectedItemPosition() < 5)
                             line = parent.getSelectedItemPosition() + 1;
-                        else line = parent.getSelectedItemPosition() + 2;
+                        else if ((parent.getSelectedItemPosition() == 5))
+                            line = parent.getSelectedItemPosition() + 2;
+                        else if((parent.getSelectedItemPosition() > 5))
+                            line = parent.getSelectedItemPosition() + 3;
                     } else line = parent.getSelectedItemPosition() + 1;
                     Log.i(TAG, "onItemSelected: " + line);
                 }
@@ -167,14 +166,29 @@ public class Menu extends AppCompatActivity {
         });
         cancel.setOnClickListener(v -> dialog.cancel());
         find.setOnClickListener(v -> AsyncTask.execute(() -> {
-            if (line == -1) {
-                Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383);
-                stationName.setText(station.getName());
-                Log.i(TAG, station.toString());
-            } else {
-                Station station = Utilies.getInstance(getApplicationContext()).getNearestStation(35.7082153, 51.4047383, line);
-                stationName.setText(station.getName());
-                Log.i(TAG, station.toString());
+            switch (type) {
+                case METRO:
+                    if (line == -1) {
+                        Metro station = Utilies.getInstance(getApplicationContext()).getNearestMetroStation(35.7543188, 51.0620597);
+                        stationName.setText(station.getName());
+                        Log.i(TAG, station.toString());
+                    } else {
+                        Metro station = Utilies.getInstance(getApplicationContext()).getNearestMetroStation(35.7543188, 51.0620597, line);
+                        stationName.setText(station.getName());
+                        Log.i(TAG, station.toString());
+                    }
+                    break;
+                case BUS:
+                    if (line == -1) {
+                        Brt station = Utilies.getInstance(getApplicationContext()).getNearestBrtStation(35.7543188, 51.0620597);
+                        stationName.setText(station.getName());
+                        Log.i(TAG, station.toString());
+                    } else {
+                        Brt station = Utilies.getInstance(getApplicationContext()).getNearestBrtStation(35.7543188, 51.0620597, line);
+                        stationName.setText(station.getName());
+                        Log.i(TAG, station.toString());
+                    }
+                    break;
             }
         }));
         dialog.show();
