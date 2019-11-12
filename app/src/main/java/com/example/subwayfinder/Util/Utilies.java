@@ -1,21 +1,19 @@
 package com.example.subwayfinder.Util;
 
-import android.app.Application;
 import android.content.Context;
 
-import androidx.room.Room;
-
+import com.example.subwayfinder.database.Brt;
 import com.example.subwayfinder.database.Database;
-import com.example.subwayfinder.database.Station;
+import com.example.subwayfinder.database.Metro;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Utilies {
 
     private static Utilies instance;
-    private static List<Station> stationList = new ArrayList<>();
+    private static List<Brt> brtStationList = new ArrayList<>();
+    private static List<Metro> metroStationList = new ArrayList<>();
 
     /**
      * @param context application context to use with room
@@ -24,7 +22,8 @@ public class Utilies {
     public static Utilies getInstance(Context context) {
         if (instance == null) {
             instance = new Utilies();
-            stationList.addAll(Room.databaseBuilder(context, Database.class, "subway").build().dao().getStations());
+            brtStationList.addAll(Database.getInstance(context).dao().getBrtStations());
+            metroStationList.addAll(Database.getInstance(context).dao().getMetroStations());
             return instance;
         }
         return instance;
@@ -36,16 +35,18 @@ public class Utilies {
      * @param lon
      * @return the id of the station witch is nearest to the location provided in method signature
      */
-    public Station getNearestStation(double lat, double lon) {
-        Station returningStation = null;
+    public Brt getNearestBrtStation(double lat, double lon) {
+        Brt returningStation = null;
         double distance = 0;
-        for (Station station : stationList) {
+        for (Brt station : brtStationList) {
+            double calculatedDistance = Math.abs(distance(lat, station.getLat(), lon, station.getLon(), 0, 0));
             if (returningStation == null) {
                 returningStation = station;
-                distance = distance(lat, station.getLat(), lon, station.getLon(), 0, 0);
+                distance = calculatedDistance;
                 continue;
             }
-            if (distance > distance(lat, station.getLat(), lon, station.getLon(), 0, 0)) {
+            if (distance > calculatedDistance) {
+                distance = calculatedDistance;
                 returningStation = station;
             }
         }
@@ -58,17 +59,67 @@ public class Utilies {
      * @param line
      * @return the id of the station witch is nearest to the location provided in method signature
      */
-    public Station getNearestStation(double lat, double lon, int line) {
-        Station returningStation = null;
+    public Brt getNearestBrtStation(double lat, double lon, int line) {
+        Brt returningStation = null;
         double distance = 0;
-        for (Station station : stationList) {
+        for (Brt station : brtStationList) {
             if (station.getLine() == line) {
+                double calculatedDistance = Math.abs(distance(lat, station.getLat(), lon, station.getLon(), 0, 0));
                 if (returningStation == null) {
                     returningStation = station;
-                    distance = distance(lat, station.getLat(), lon, station.getLon(), 0, 0);
+                    distance = calculatedDistance;
                     continue;
                 }
-                if (distance > distance(lat, station.getLat(), lon, station.getLon(), 0, 0)) {
+                if (distance > calculatedDistance) {
+                    distance = calculatedDistance;
+                    returningStation = station;
+                }
+            }
+        }
+        return returningStation;
+    }
+    /**
+     * @param lat
+     * @param lon
+     * @return the id of the station witch is nearest to the location provided in method signature
+     */
+    public Metro getNearestMetroStation(double lat, double lon) {
+        Metro returningStation = null;
+        double distance = 0;
+        for (Metro station : metroStationList) {
+            double calculatedDistance = Math.abs(distance(lat, station.getLat(), lon, station.getLon(), 0, 0));
+            if (returningStation == null) {
+                returningStation = station;
+                distance = calculatedDistance;
+                continue;
+            }
+            if (distance > calculatedDistance) {
+                distance = calculatedDistance;
+                returningStation = station;
+            }
+        }
+        return returningStation;
+    }
+
+    /**
+     * @param lat
+     * @param lon
+     * @param line
+     * @return the id of the station witch is nearest to the location provided in method signature
+     */
+    public Metro getNearestMetroStation(double lat, double lon, int line) {
+        Metro returningStation = null;
+        double distance = 0;
+        for (Metro station : metroStationList) {
+            if (station.getLine() == line) {
+                double calculatedDistance = Math.abs(distance(lat, station.getLat(), lon, station.getLon(), 0, 0));
+                if (returningStation == null) {
+                    returningStation = station;
+                    distance = calculatedDistance;
+                    continue;
+                }
+                if (distance > calculatedDistance) {
+                    distance = calculatedDistance;
                     returningStation = station;
                 }
             }
