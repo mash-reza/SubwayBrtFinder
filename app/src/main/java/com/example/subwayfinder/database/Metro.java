@@ -4,20 +4,22 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "station")
-public class Station {
+@Entity(tableName = "METRO")
+public class Metro {
     @PrimaryKey
     private int id;
     @NonNull
     private String name;
     @NonNull
-    private int line;
+    private String fa_name;
     @NonNull
     private double lat;
     @NonNull
     private double lon;
+    @NonNull
+    private int line;
 
-    public Station() {
+    public Metro() {
     }
 
     public int getId() {
@@ -28,20 +30,22 @@ public class Station {
         this.id = id;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
-    public int getLine() {
-        return line;
+    @NonNull
+    public String getFa_name() {
+        return fa_name;
     }
 
-    public void setLine(int line) {
-        this.line = line;
+    public void setFa_name(@NonNull String fa_name) {
+        this.fa_name = fa_name;
     }
 
     public double getLat() {
@@ -60,9 +64,17 @@ public class Station {
         this.lon = lon;
     }
 
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
     @NonNull
     @Override
     public String toString() {
-        return "\nid: " + this.id + ", name: " + this.name + ", line: " + this.line + ", lat: " + this.lat + ", lon:" + this.lon + "\n";
+        return "\nid: " + this.id + ", name: " + this.name + ", line: " /*+ this.line*/ + ", lat: " + this.lat + ", lon:" + this.lon + "\n";
     }
 }

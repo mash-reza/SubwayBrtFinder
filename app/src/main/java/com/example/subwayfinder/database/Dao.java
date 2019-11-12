@@ -1,14 +1,18 @@
 package com.example.subwayfinder.database;
 
+import android.database.Cursor;
+
 import androidx.room.Query;
 
 import java.util.List;
 
 @androidx.room.Dao
 public interface Dao {
-    @Query("select * from station")
-    List<Station> getStations();
+    @Query("select * from METRO")
+    List<Metro> getMetroStations();
 
-    @Query("select * from station where id = :id")
-    List<Station> getStation(int id);
+    @Query("select * from BRT")
+    List<Brt> getBrtStations();
+
+
 }

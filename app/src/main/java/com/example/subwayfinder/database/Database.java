@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 
-@androidx.room.Database(entities = {Station.class}, version = 1, exportSchema = false)
+@androidx.room.Database(entities = {Brt.class,Metro.class}, version = 1, exportSchema = false)
 public abstract class Database extends RoomDatabase {
     public abstract Dao dao();
 
@@ -15,7 +15,7 @@ public abstract class Database extends RoomDatabase {
 
     public static synchronized Database getInstance(Context context) {
         if (instance == null)
-            return instance = Room.databaseBuilder(context, Database.class, "subway").createFromAsset("subway.db").build();
+            return instance = Room.databaseBuilder(context, Database.class, "station").createFromAsset("station.db").build();
         return instance;
     }
 }
