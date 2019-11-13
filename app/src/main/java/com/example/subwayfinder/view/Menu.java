@@ -130,6 +130,27 @@ public class Menu extends AppCompatActivity {
         Button cancel = dialogView.findViewById(R.id.dialogStationCancelButton);
         Button find = dialogView.findViewById(R.id.dialogStationFindButton);
         TextView stationName = dialogView.findViewById(R.id.dialogStationNameTextView);
+        RadioGroup radioGroup = dialogView.findViewById(R.id.dialogRadioGroup);
+        spinner.setOnTouchListener((v, event) -> true);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.dialogAllStationsRadioButton:
+                    spinner.setOnTouchListener((v, event) -> true);
+                    line = -1;
+                    break;
+                case R.id.dialogLineRadioButton:
+                    spinner.setOnTouchListener((v, event) -> false);
+                    if (type == StationType.BUS) {
+                        if (spinner.getSelectedItemPosition() < 5)
+                            line = spinner.getSelectedItemPosition() + 1;
+                        else if ((spinner.getSelectedItemPosition() == 5))
+                            line = spinner.getSelectedItemPosition() + 2;
+                        else if ((spinner.getSelectedItemPosition() > 5))
+                            line = spinner.getSelectedItemPosition() + 3;
+                    } else line = spinner.getSelectedItemPosition() + 1;
+                    break;
+            }
+        });
         switch (type) {
             case BUS:
                 ArrayAdapter<CharSequence> brtAdapter = ArrayAdapter.createFromResource(this, R.array.brt_lines, android.R.layout.simple_spinner_item);
@@ -145,15 +166,15 @@ public class Menu extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (beginOfDialogShowing) {
-                    beginOfDialogShowing = false;
+                if (isSpinnerItemSelected) {
+                    isSpinnerItemSelected = false;
                 } else {
                     if (type == StationType.BUS) {
                         if (parent.getSelectedItemPosition() < 5)
                             line = parent.getSelectedItemPosition() + 1;
                         else if ((parent.getSelectedItemPosition() == 5))
                             line = parent.getSelectedItemPosition() + 2;
-                        else if((parent.getSelectedItemPosition() > 5))
+                        else if ((parent.getSelectedItemPosition() > 5))
                             line = parent.getSelectedItemPosition() + 3;
                     } else line = parent.getSelectedItemPosition() + 1;
                     Log.i(TAG, "onItemSelected: " + line);
