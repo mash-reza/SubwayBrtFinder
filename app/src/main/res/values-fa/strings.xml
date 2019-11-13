@@ -2,6 +2,14 @@
 <resources>
     <string name="app_name">راهنمای مترو و BRT تهران</string>
     <string name="back_pressed_message">برای خروج مجددا بازگشت را بفشارید</string>
+    <string name="station_name_hint">ایستگاه</string>
+    <string name="find">بیاب</string>
+    <string name="cancel">انصراف</string>
+    <string name="search_station_by">جستجوی ایستگاه بر اساس</string>
+    <string name="all_stations">تمام ایستگاه ها</string>
+    <string name="line">خط</string>
+    <string name="turn_on_location">لطفا مکان دستگاه را روشن کنید.</string>
+    <string name="can_not_get_location_messege">عدم امکان دریافت اطلاعات مکانی! لطفا مکان دستگاه را یکبار خاموش و روشن کنید یا دقت مکان را در تنظیمات دستگاه ارتقا دهید!</string>
     <string-array name="metro_lines">
         <item>خط ۱ (تجریش - کهریزک)</item>
         <item>خط ۲ (صادقیه - فرهنگسرا)</item>
