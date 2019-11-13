@@ -35,6 +35,8 @@ public class Menu extends AppCompatActivity {
     private static final int INTERNET_REQEST_CODE = 30;
     private double latitude;
     private double longitude;
+    private double stationLatitude;
+    private double stationLongitude;
     //    private boolean isLocationOn = false;
     private boolean isLatLonLoaded = false;
     private LocationManager locationManager;
@@ -242,6 +244,16 @@ public class Menu extends AppCompatActivity {
                     break;
             }
         }));
+        stationName.setOnClickListener(v -> {
+            if (isLatLonLoaded) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + stationLatitude + "," + stationLongitude+"("+stationName.getText()+")");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
         dialog.show();
     }
 }
