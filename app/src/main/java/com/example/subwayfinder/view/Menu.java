@@ -30,6 +30,15 @@ import butterknife.ButterKnife;
 
 public class Menu extends AppCompatActivity {
     private static final String TAG = "Menu";
+    private static final int LOCATION_REQEST_CODE = 10;
+    private static final int WIFI_REQEST_CODE = 20;
+    private static final int INTERNET_REQEST_CODE = 30;
+    private double latitude;
+    private double longitude;
+    //    private boolean isLocationOn = false;
+    private boolean isLatLonLoaded = false;
+    private LocationManager locationManager;
+    private FusedLocationProviderClient locationProviderClient;
 
     @BindView(R.id.menuBrtImageButton)
     ImageButton menuBrtImageButton;
@@ -58,6 +67,27 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
         ButterKnife.bind(this);
 
+                }
+            }, Looper.getMainLooper());
+        }
+    }
+
+    private void checkPermission() {
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQEST_CODE);
+        }
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_WIFI_STATE}, WIFI_REQEST_CODE);
+        }
+        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.INTERNET)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_WIFI_STATE}, INTERNET_REQEST_CODE);
+        }
     }
 
     public void onClick(View view) throws IOException {
