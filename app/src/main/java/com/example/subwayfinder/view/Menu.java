@@ -24,6 +24,7 @@ import com.example.subwayfinder.database.Metro;
 import com.jsibbold.zoomage.ZoomageView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
