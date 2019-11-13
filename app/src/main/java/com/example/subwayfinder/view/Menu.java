@@ -59,7 +59,7 @@ public class Menu extends AppCompatActivity {
     }
 
     private int line = -1;
-    private boolean beginOfDialogShowing = false;
+    private boolean isSpinnerItemSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +152,7 @@ public class Menu extends AppCompatActivity {
 
     private void showStationDialog(StationType type) {
         line = -1;
-        beginOfDialogShowing = true;
+        isSpinnerItemSelected = true;
         AlertDialog dialog = new AlertDialog.Builder(this).setCancelable(false).create();
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_station, null);
         dialog.setView(dialogView);
